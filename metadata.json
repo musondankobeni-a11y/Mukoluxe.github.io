@@ -1,0 +1,8 @@
+{
+  "name": "Muko Luxe Concierge",
+  "description": "Premium beverage and mobile bartending concierge services for weddings, corporate events, private celebrations, and cocktail receptions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
