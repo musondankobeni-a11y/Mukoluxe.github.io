@@ -10,10 +10,14 @@ import { Footer } from './components/Footer';
 import { AboutModal } from './components/AboutModal';
 import { CustomerFeedbackModal } from './components/CustomerFeedbackModal';
 import { StaffTerminalModal } from './components/StaffTerminalModal';
+import { NotificationBanner } from './components/NotificationBanner';
 
 function MainLayout() {
   return (
     <div className="min-h-screen bg-[#080706] text-[#f7f3ed] selection:bg-amber-500 selection:text-black flex flex-col font-sans">
+      {/* Real-Time Booking & Purchase Pop Notifications */}
+      <NotificationBanner />
+
       {/* Dedicated Promotion Banner Space (Live Editable) */}
       <PromoBanner />
 

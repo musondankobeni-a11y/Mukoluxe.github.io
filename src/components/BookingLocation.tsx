@@ -41,7 +41,7 @@ export const BookingLocation: React.FC = () => {
   const [eventDate, setEventDate] = useState('');
   const [locationVenue, setLocationVenue] = useState('Kabwe & Surrounds');
   const [guestCount, setGuestCount] = useState<number>(75);
-  const [selectedDrinks, setSelectedDrinks] = useState<string[]>(['signature-blend']);
+  const [selectedDrinks, setSelectedDrinks] = useState<string[]>([]);
   const [packageType, setPackageType] = useState('Full Mobile Bar Concierge');
   const [specialNotes, setSpecialNotes] = useState('');
   const [submittedTicket, setSubmittedTicket] = useState<OrderTicket | null>(null);
@@ -67,7 +67,9 @@ export const BookingLocation: React.FC = () => {
   useEffect(() => {
     if (selectedMenuDrinks.length > 0) {
       const ids = selectedMenuDrinks.map(d => d.id);
-      setSelectedDrinks(prev => Array.from(new Set([...prev, ...ids])));
+      setSelectedDrinks(ids);
+    } else {
+      setSelectedDrinks([]);
     }
   }, [selectedMenuDrinks]);
 
@@ -113,7 +115,11 @@ export const BookingLocation: React.FC = () => {
     // Save this ticket to the customer's own device list so they can easily access it without exposing others
     const updatedMy = Array.from(new Set([ticket.ticketNumber.toUpperCase(), ...myTickets]));
     setMyTickets(updatedMy);
-    localStorage.setItem('muko_my_booked_tickets', JSON.stringify(updatedMy));
+    try {
+      localStorage.setItem('muko_my_booked_tickets', JSON.stringify(updatedMy));
+    } catch {
+      // Safe fallback for restricted browsers
+    }
   };
 
   // SECURE TICKET TRACKING: Customer can only see THEIR OWN ticket
@@ -552,7 +558,9 @@ export const BookingLocation: React.FC = () => {
                           Total Price of Selected Items
                         </span>
                         <span className="text-xs text-amber-200/70">
-                          {bookingSelectedDrinkItems.length} cocktail{bookingSelectedDrinkItems.length !== 1 ? 's' : ''} chosen for bar package
+                          {bookingSelectedDrinkItems.length > 0
+                            ? `${bookingSelectedDrinkItems.length} cocktail${bookingSelectedDrinkItems.length !== 1 ? 's' : ''} chosen for bar package`
+                            : 'No drinks chosen yet · Select cocktails above to add'}
                         </span>
                       </div>
                     </div>

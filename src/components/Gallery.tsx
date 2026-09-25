@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GlassWater, Sparkles, X, Eye, ZoomIn } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from '../utils/imageHelper';
 
 interface CocktailGalleryItem {
   id: string;
@@ -17,7 +18,7 @@ const RAW_GALLERY_ITEMS: CocktailGalleryItem[] = [
     id: 'gal-1',
     title: 'The Signature Blend Masterpiece',
     type: 'cocktail',
-    image: '/src/assets/images/cocktail_signature_blend_1790315318909.jpg',
+    image: '/images/cocktail_signature_blend.jpg',
     notes: 'Aged spirit, spiced citrus cordial, flamed blood orange & 24k edible gold.',
     glassware: 'Vintage Gold-Rimmed Coupe',
     technique: 'Stirred over hand-carved block ice'
@@ -26,7 +27,7 @@ const RAW_GALLERY_ITEMS: CocktailGalleryItem[] = [
     id: 'gal-2',
     title: 'Smoked Applewood Old Fashioned',
     type: 'cocktail',
-    image: '/src/assets/images/cocktail_smoked_old_fashioned_1790315331376.jpg',
+    image: '/images/cocktail_smoked_old_fashioned.jpg',
     notes: 'Bourbon reserve infused under cold applewood smoke bell, flamed peel.',
     glassware: 'Crystal Diamond Tumbler',
     technique: 'Aromatic Bell Smoke Infusion'
@@ -35,7 +36,7 @@ const RAW_GALLERY_ITEMS: CocktailGalleryItem[] = [
     id: 'gal-3',
     title: 'Wild Botanical Bramble Highball',
     type: 'cocktail',
-    image: '/src/assets/images/cocktail_berry_bramble_1790315347337.jpg',
+    image: '/images/cocktail_berry_bramble.jpg',
     notes: 'Muddled fresh blackberries, crushed crystal ice, garden rosemary sprig.',
     glassware: 'Cut Glass Diamond Highball',
     technique: 'Layered Swizzle over Crushed Ice'
@@ -44,16 +45,34 @@ const RAW_GALLERY_ITEMS: CocktailGalleryItem[] = [
     id: 'gal-4',
     title: 'Velvet Midnight Reserve Martini',
     type: 'cocktail',
-    image: '/src/assets/images/cocktail_velvet_martini_1790315357768.jpg',
+    image: '/images/cocktail_velvet_martini.jpg',
     notes: 'Double-shaken microfoam cream, roasted espresso bean reduction.',
     glassware: 'Chilled Stemmed Martini Glass',
     technique: 'Hard Shaken with Nitrogen Chill'
   },
   {
     id: 'gal-5',
+    title: 'Emerald Botanical Cucumber Fizz',
+    type: 'cocktail',
+    image: '/images/cocktail_emerald_botanical.jpg',
+    notes: 'Crisp English cucumber ribbons, elderflower cordial, zero-proof distillate.',
+    glassware: 'Fluted Crystal Highball',
+    technique: 'Carbonated Fizz with Herb Infusion'
+  },
+  {
+    id: 'gal-6',
+    title: 'Zambezi Sunburst Tropical Elixir',
+    type: 'cocktail',
+    image: '/images/cocktail_zambezi_sunburst.jpg',
+    notes: 'Wild passion fruit, cold-pressed ruby grapefruit, and spiced ginger extract.',
+    glassware: 'Crystal Stem Coupe',
+    technique: 'Hand Shaken & Double Strained'
+  },
+  {
+    id: 'gal-7',
     title: 'Atmospheric Mobile Bar Showcase',
     type: 'cocktail',
-    image: '/src/assets/images/cocktail_hero_luxury_1790315307049.jpg',
+    image: '/images/mobile_bar_luxury_event.jpg',
     notes: 'Luxury mobile bar service featuring artisanal spirits and crystal barware.',
     glassware: 'Bespoke Event Glassware Suite',
     technique: 'Full Mobile Bar Concierge Station'
@@ -109,8 +128,11 @@ export const Gallery: React.FC = () => {
             className="group relative rounded-2xl overflow-hidden glass-panel border border-amber-500/20 hover:border-amber-400/50 cursor-pointer aspect-4/3 sm:aspect-square"
           >
             <img
-              src={item.image}
+              src={resolveImageUrl(item.image)}
               alt={item.title}
+              loading="lazy"
+              decoding="async"
+              onError={handleImageError}
               className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 brightness-90 group-hover:brightness-100"
               referrerPolicy="no-referrer"
             />
@@ -166,8 +188,9 @@ export const Gallery: React.FC = () => {
 
               <div className="md:w-3/5 bg-black/80 flex items-center justify-center">
                 <img
-                  src={selectedPhoto.image}
+                  src={resolveImageUrl(selectedPhoto.image)}
                   alt={selectedPhoto.title}
+                  onError={handleImageError}
                   className="w-full h-full max-h-[60vh] md:max-h-[80vh] object-cover"
                   referrerPolicy="no-referrer"
                 />

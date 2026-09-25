@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Wine, Check, Plus, Edit3, ArrowRight, X, Receipt } from 'lucide-react';
 import { DrinkItem } from '../types';
+import { resolveImageUrl, handleImageError } from '../utils/imageHelper';
 
 export const InteractiveMenu: React.FC = () => {
   const {
@@ -170,8 +171,11 @@ export const InteractiveMenu: React.FC = () => {
               {/* Card Image */}
               <div className="relative h-60 w-full overflow-hidden bg-black/40">
                 <img
-                  src={drink.image}
+                  src={resolveImageUrl(drink.image)}
                   alt={drink.name}
+                  loading="lazy"
+                  decoding="async"
+                  onError={handleImageError}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 group-hover:brightness-100"
                   referrerPolicy="no-referrer"
                 />

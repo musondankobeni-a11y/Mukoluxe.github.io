@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Menu, X, ShieldCheck, Star, Sparkles, Phone, MapPin, Clock } from 'lucide-react';
+import { Menu, X, ShieldCheck, Star, Sparkles, Phone, MapPin, Clock, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const Navbar: React.FC = () => {
@@ -10,7 +10,8 @@ export const Navbar: React.FC = () => {
     setIsStaffModalOpen,
     setIsFeedbackModalOpen,
     isStaffLoggedIn,
-    settings
+    settings,
+    notifications
   } = useApp();
 
   const handleNavClick = (sectionId: string) => {
@@ -55,8 +56,24 @@ export const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Top Right: Three lines burger menu icon */}
+          {/* Top Right: Three lines burger menu icon & notification bell (Staff Only) */}
           <div className="flex items-center gap-2">
+            {/* VIP Notification Activity Bell - Only visible when staff is logged in */}
+            {isStaffLoggedIn && (
+              <button
+                onClick={() => setIsStaffModalOpen(true)}
+                title="Recent VIP Bookings & Concierge Notifications"
+                className="relative flex items-center justify-center w-11 h-11 rounded-lg border border-amber-500/30 bg-black/40 hover:bg-amber-950/40 text-amber-300 hover:text-white transition-all cursor-pointer"
+              >
+                <Bell className="w-5 h-5" />
+                {notifications.length > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-black text-[10px] font-bold font-mono flex items-center justify-center shadow-lg animate-pulse">
+                    {notifications.length}
+                  </span>
+                )}
+              </button>
+            )}
+
             <button
               onClick={() => setIsFeedbackModalOpen(true)}
               className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 text-xs text-amber-200/90 hover:text-amber-100 rounded-lg border border-amber-500/20 hover:border-amber-400/40 bg-amber-500/10 hover:bg-amber-500/20 transition-all"

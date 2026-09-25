@@ -2,6 +2,7 @@ import React from 'react';
 import { useApp } from '../context/AppContext';
 import { motion } from 'motion/react';
 import { Sparkles, Calendar, GlassWater, ArrowDown, Award, Star, Compass } from 'lucide-react';
+import { resolveImageUrl, handleImageError } from '../utils/imageHelper';
 
 export const IntroHero: React.FC = () => {
   const { toggleAbout, setIsFeedbackModalOpen } = useApp();
@@ -28,8 +29,9 @@ export const IntroHero: React.FC = () => {
           className="w-full h-full"
         >
           <img
-            src="/src/assets/images/cocktail_hero_luxury_1790315307049.jpg"
+            src="/images/cocktail_hero_luxury.jpg"
             alt="Muko Luxe Luxury Cocktail Lounge & Mobile Bar Atmosphere"
+            onError={handleImageError}
             className="w-full h-full object-cover object-center filter brightness-[0.38] contrast-[1.15]"
             referrerPolicy="no-referrer"
           />
@@ -122,8 +124,10 @@ export const IntroHero: React.FC = () => {
 
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 border border-amber-500/30">
               <img
-                src="/src/assets/images/cocktail_signature_blend_1790315318909.jpg"
+                src="/images/cocktail_signature_blend.jpg"
                 alt="Signature Blend Cocktail"
+                loading="lazy"
+                onError={handleImageError}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 referrerPolicy="no-referrer"
               />

@@ -65,3 +65,15 @@ export interface AppSettings {
   locationCode: string;
   locationLabel: string;
 }
+
+export interface AppNotification {
+  id: string;
+  type: 'booking' | 'purchase' | 'status' | 'general';
+  title: string;
+  message: string;
+  timestamp: number;
+  ticketNumber?: string;
+  amount?: number;
+  clientName?: string;
+}
+
